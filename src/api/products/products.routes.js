@@ -4,6 +4,7 @@ import ProductsService from './../../api/products/products.service.js';
 
 const { getProducts, getProductById, getProductsByKey } = ProductsService;
 
+
 router.route('/')
     .get(getProducts);
 router.route('/by_key')

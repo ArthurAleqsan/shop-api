@@ -6,9 +6,9 @@ import bodyParser from 'body-parser';
 import MongodbStorage from './storage/mongodb.storage.js';
 import Config from './config/variables.js';
 import LoggerUtil from './util/logger.util.js';
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 import productRoutes from './api/products/products.routes.js';
-
 
 const { PORT, CORS_OPTIONS } = Config;
 
@@ -19,17 +19,18 @@ const app = express();
 app.use(cors(CORS_OPTIONS));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 
+// Routes
+
 app.use('/api/products', productRoutes)
 
-// app.get('/', (req, res) => {
-//     res.send('Hello World!')
-// })
+app.use(notFound)
+app.use(errorHandler)
 
 const init = async () => {
-    MongodbStorage.init();
-    app.listen(PORT, () => {
-        LoggerUtil.info(`App listening at http://localhost:${PORT}`);
-    })
+  MongodbStorage.init();
+  app.listen(PORT, () => {
+    LoggerUtil.info(`App listening at http://localhost:${PORT}`);
+  })
 };
 
 init();

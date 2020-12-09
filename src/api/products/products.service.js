@@ -15,7 +15,12 @@ class ProductsService {
     static async getProductById(req, res, next) {
         try {
             const product = await Product.findById(req.params.id);
-            handleGet(res, next, product);
+            if(!product) {
+                res.status(404)
+                throw new Error('Product not found')
+            } else {
+                handleGet(res, next, product);
+            }
         } catch (e) {
             next(e)
         }

@@ -1,4 +1,4 @@
-import ResourceNotFoundError from './errors.util.js';
+// import ERRORS from './errors.util.js';
 import HttpStatusCodesUtil from './http-status-codes.util.js';
 
 class SuccessHandlerUtil {
@@ -9,18 +9,19 @@ class SuccessHandlerUtil {
      * @description Send response.
      */
     static _sendResponse(response, status, data) {
+ 
         response.status(status).json(data)
     }
 
     /**
    * @param {Object} response
    * @param {Function} next
-   * @param {Object} result
+   * @param {Object} result 
    * @description Handle `get` type requests.
    */
     static handleGet(response, next, result) {
         if (!result) {
-            return next(new ResourceNotFoundError('The specified resource is not found.'))
+            return next(new ERROR('The specified resource is not found.'))
         }
 
         SuccessHandlerUtil._sendResponse(response, HttpStatusCodesUtil.OK, result)
