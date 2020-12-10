@@ -15,7 +15,7 @@ class ProductsService {
     static async getProductById(req, res, next) {
         try {
             const product = await Product.findById(req.params.id);
-            if(!product) {
+            if (!product) {
                 res.status(404)
                 throw new Error('Product not found')
             } else {
@@ -29,7 +29,7 @@ class ProductsService {
         try {
             const query = {};
             Object.keys(req.body).forEach(k => {
-                query[k] = {$regex: new RegExp(req.body[k], 'i')}
+                query[k] = { $regex: new RegExp(req.body[k], 'i') }
             });
             const products = await Product.find(query);
             handleGet(res, next, products);

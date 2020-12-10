@@ -9,6 +9,7 @@ import LoggerUtil from './util/logger.util.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 import productRoutes from './api/products/products.routes.js';
+import userRoutes from './api/users/users.routes.js';
 
 const { PORT, CORS_OPTIONS } = Config;
 
@@ -21,7 +22,8 @@ app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 
 // Routes
 
-app.use('/api/products', productRoutes)
+app.use('/api/products', productRoutes);
+app.use('/api/users/', userRoutes);
 
 app.use(notFound)
 app.use(errorHandler)
