@@ -61,6 +61,32 @@ class UsersService {
         }
     }
 
+    static async updateUser(req, res, next) {
+        try {
+            const user = await Users.findById(req.params.id)
+
+            if (user) {
+              user.name = req.body.name || user.name
+              user.email = req.body.email || user.email
+              user.isAdmin = true
+          
+              const updatedUser = await user.save()
+          
+              res.json({
+                id: updatedUser._id,
+                name: updatedUser.name,
+                email: updatedUser.email,
+                isAdmin: updatedUser.isAdmin,
+              })
+            } else {
+              res.status(404)
+              throw new Error('User not found')
+            }
+        } catch(e) {
+            next(e)
+        }
+    }
+
     static async getProfile(req, res, next) {
         try {
             const user = await Users.findById(req.user.id)

@@ -3,7 +3,7 @@ const router = express.Router()
 import UsersService from '../services/users.service.js'
 import { protect } from '../../middleware/authMiddleware.js'
 
-const { login, registerUser, getProfile } = UsersService
+const { login, registerUser, getProfile, updateUser } = UsersService
 
 /**
  * @desc    Register user and get token
@@ -31,5 +31,14 @@ router.route('/login')
 
 router.route('/profile')
     .get(protect, getProfile)
+
+/**
+* @desc    Update user
+* @route   PUT /api/users/:id
+* @access  Private/Admin
+**/
+
+router.route('/:id')
+    .put(updateUser)
 
 export default router
