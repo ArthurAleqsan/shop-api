@@ -1,9 +1,15 @@
 import express from 'express'
 const router = express.Router()
 import UsersService from '../services/users.service.js'
-import { protect } from '../../middleware/authMiddleware.js'
+import { protect, checkIsAdmin } from '../../middleware/authMiddleware.js'
 
-const { login, registerUser, getProfile, updateUser } = UsersService
+const { login, registerUser, getProfile, getUsers, getUserById, updateUser, updateUserProfile } = UsersService
+
+/**
+ * @desc    Get all users
+ * @route   GET /api/users
+ * @access  Private/Admin
+**/
 
 /**
  * @desc    Register user and get token
@@ -12,6 +18,7 @@ const { login, registerUser, getProfile, updateUser } = UsersService
 **/
 
 router.route('/')
+    .get(protect, checkIsAdmin, getUsers)
     .post(registerUser)
 
 /**
@@ -29,8 +36,21 @@ router.route('/login')
  * @access Protected
 **/
 
+/**
+ * @desc   Update user profile
+ * @route  PUT /api/users/profile
+ * @access Private
+**/
+
 router.route('/profile')
     .get(protect, getProfile)
+    .put(protect, updateUserProfile)
+
+/**
+* @desc    Get user by id
+* @route   GET /api/users/:id
+* @access  Public
+**/
 
 /**
 * @desc    Update user
@@ -39,6 +59,7 @@ router.route('/profile')
 **/
 
 router.route('/:id')
-    .put(updateUser)
+    .get(getUserById)
+    .put(protect, checkIsAdmin, updateUser)
 
 export default router

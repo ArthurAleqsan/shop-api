@@ -66,23 +66,79 @@ class UsersService {
             const user = await Users.findById(req.params.id)
 
             if (user) {
-              user.name = req.body.name || user.name
-              user.email = req.body.email || user.email
-              user.isAdmin = true
-          
-              const updatedUser = await user.save()
-          
-              res.json({
-                id: updatedUser._id,
-                name: updatedUser.name,
-                email: updatedUser.email,
-                isAdmin: updatedUser.isAdmin,
-              })
+                user.name = req.body.name || user.name
+                user.email = req.body.email || user.email
+                user.isAdmin = true
+
+                const updatedUser = await user.save()
+
+                res.json({
+                    id: updatedUser._id,
+                    name: updatedUser.name,
+                    email: updatedUser.email,
+                    isAdmin: updatedUser.isAdmin,
+                })
             } else {
-              res.status(404)
-              throw new Error('User not found')
+                res.status(404)
+                throw new Error('User not found')
             }
-        } catch(e) {
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    static async updateUserProfile(req, res, next) {
+        try {
+            const user = await Users.findById(req.user.id)
+
+            if (user) {
+                user.name = req.body.name || user.name
+                user.email = req.body.email || user.email
+                user.avatar = req.body.avatar || user.avatar
+                if (req.body.password && req.body.confirmPassword == req.body.password) {
+                  user.password = req.body.password
+                }
+            
+                const updatedUser = await user.save()
+            
+                res.json({
+                  id: updatedUser._id,
+                  name: updatedUser.name,
+                  email: updatedUser.email,
+                  isAdmin: updatedUser.isAdmin,
+                  avatar: updatedUser.avatar,
+                  token: generateToken(updatedUser._id),
+                })
+              } else {
+                res.status(404)
+                throw new Error('User not found')
+              }
+        } catch (e) {
+            next(e)
+        }
+        
+    }
+
+    static async getUsers(req, res, next) {
+        try {
+            const users = await Users.find({})
+            res.json(users)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    static async getUserById(req, res, next) {
+        try {
+            const user = await Users.findById(req.params.id).select('-password')
+
+            if (user) {
+                res.json(user)
+            } else {
+                res.status(404)
+                throw new Error('User not found')
+            }
+        } catch (e) {
             next(e)
         }
     }
