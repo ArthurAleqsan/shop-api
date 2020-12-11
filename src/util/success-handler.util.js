@@ -1,5 +1,5 @@
-// import ERRORS from './errors.util.js';
-import HttpStatusCodesUtil from './http-status-codes.util.js';
+// import ERRORS from './errors.util.js'
+import HttpStatusCodesUtil from './http-status-codes.util.js'
 
 class SuccessHandlerUtil {
     /**
@@ -42,4 +42,4 @@ class SuccessHandlerUtil {
     }
 }
 
-export default SuccessHandlerUtil;
+export default SuccessHandlerUtil

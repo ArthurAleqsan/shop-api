@@ -1,4 +1,4 @@
-import winston from 'winston';
+import winston from 'winston'
 
 winston.addColors({
   error: 'red',
@@ -30,4 +30,4 @@ const LoggerUtil = winston.createLogger({
   })
 })
 
-export default LoggerUtil;
+export default LoggerUtil

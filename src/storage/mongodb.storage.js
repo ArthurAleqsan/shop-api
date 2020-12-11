@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
-import Config from '../config/variables.js';
-import LoggerUtil from '../util/logger.util.js';
+import mongoose from 'mongoose'
+import Config from '../config/variables.js'
+import LoggerUtil from '../util/logger.util.js'
 
-const { MONGO_OPTIONS, MONGODB } = Config;
+const { MONGO_OPTIONS, MONGODB } = Config
 
-const DB_URI = process.env.MONGO_URI || MONGODB.URL;
+const DB_URI = process.env.MONGO_URI || MONGODB.URL
 
 class MongodbStorage {
   /**

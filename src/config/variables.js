@@ -19,4 +19,4 @@ const Config = {
         maxAge: -1
     }
 }
-export default Config;
+export default Config

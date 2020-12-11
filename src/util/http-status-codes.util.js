@@ -54,4 +54,4 @@ const HTTP_STATUS_CODES = {
     USE_PROXY: 305
   }
   
-  export default HTTP_STATUS_CODES;
+  export default HTTP_STATUS_CODES
